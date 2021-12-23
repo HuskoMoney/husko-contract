@@ -5,12 +5,12 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 
-contract HuskyToken is ERC20, ERC20Burnable, Ownable {
+contract HuskoToken is ERC20, ERC20Burnable, Ownable {
     uint256 protocolFee_;
     uint256 cap_;
     address protocolFeeReciever_;
 
-    constructor(uint256 initialSupply,uint256 protocolFee,address protocolfeeReciever,uint256 cap) ERC20("HuskyToken", "HSK") {
+    constructor(uint256 initialSupply,uint256 protocolFee,address protocolfeeReciever,uint256 cap) ERC20("HuskoMoney", "HUSKO") {
         _mint(msg.sender, initialSupply);
         protocolFeeReciever_ = protocolfeeReciever;
         protocolFee_ = protocolFee;
