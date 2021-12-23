@@ -10,7 +10,7 @@ contract HuskoToken is ERC20, ERC20Burnable, Ownable {
     uint256 cap_;
     address protocolFeeReciever_;
 
-    constructor(uint256 initialSupply,uint256 protocolFee,address protocolfeeReciever,uint256 cap) ERC20("HuskoMoney", "HUSKO") {
+    constructor(uint256 initialSupply,uint256 protocolFee,address protocolfeeReciever,uint256 cap) ERC20("HuskoMoney", "HSKO") {
         _mint(msg.sender, initialSupply);
         protocolFeeReciever_ = protocolfeeReciever;
         protocolFee_ = protocolFee;
