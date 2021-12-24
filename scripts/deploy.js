@@ -4,6 +4,7 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
+const BigNumber = require('bignumber.js');
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -15,10 +16,11 @@ async function main() {
 
   // We get the contract to deploy
 	const decimals = 18;
-	const supply = 396000000 * (10**decimals);
+	const supply = new BigNumber(396000000 * (10**decimals)).toFixed();
 	const fee = 50;
 	const feeTaker = '0xAd4B1774f0C051AaEce4402370f1b340809fF64B';
-	const maxSupply = 1000000000 * (10**decimals);
+	const maxSupply = new BigNumber(1000000000 * (10**decimals)).toFixed();
+	console.log(supply, maxSupply);
   const HuskoToken = await hre.ethers.getContractFactory("HuskoToken");
   const huskoToken = await HuskoToken.deploy(supply, fee, feeTaker, maxSupply);
 
