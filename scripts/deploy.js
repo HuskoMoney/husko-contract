@@ -14,8 +14,13 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
+	const decimals = 18;
+	const supply = 396000000 * (10**decimals);
+	const fee = 50;
+	const feeTaker = '0xAd4B1774f0C051AaEce4402370f1b340809fF64B';
+	const maxSupply = 1000000000 * (10**decimals);
   const HuskoToken = await hre.ethers.getContractFactory("HuskoToken");
-  const huskoToken = await HuskoToken.deploy();
+  const huskoToken = await HuskoToken.deploy(supply, fee, feeTaker, maxSupply);
 
   await huskoToken.deployed();
 
