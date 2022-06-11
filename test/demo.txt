@@ -1,0 +1,49 @@
+HuskoToken
+
+
+Node
+npx hardhat node
+
+Deploy
+npx hardhat run --network localhost scripts/deploy_upgradeable.js
+
+Console
+npx hardhat console --network localhost
+
+Attach
+const deployedAddress = '[DEPLOYED_ADDRESS]';
+const HuskoToken = await ethers.getContractFactory('HuskoToken');
+
+const huskoToken = await HuskoToken.attach(deployedAddress);
+
+Retrieve Changed Fee
+(await huskoToken.protocolFee_()).toString();
+
+Change Fee
+await huskoToken.setProtocolFee(75);
+
+Retrieve Changed Fee
+(await huskoToken.protocolFee_()).toString();
+
+Upgrade
+npx hardhat run --network localhost scripts/upgrade.js
+
+Console
+npx hardhat console --network localhost
+
+Attach V2
+const deployedAddress = '[DEPLOYED_ADDRESS]';
+const HuskoTokenV2 = await ethers.getContractFactory('HuskoTokenV2');
+
+const huskoTokenV2 = await HuskoTokenV2.attach(deployedAddress);
+
+Change Value
+await huskoTokenV2.setNewVar('HUSKOTOKEN');
+
+Retrieve Variable
+(await huskoTokenV2.newVar_());
+
+
+
+
+

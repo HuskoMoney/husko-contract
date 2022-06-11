@@ -7,10 +7,13 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 import "hardhat/console.sol";
 
-contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgradeable {
+contract HuskoTokenV2 is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgradeable {
     uint256 public protocolFee_;
     uint256 cap_;
     address protocolFeeReciever_;
+
+    // NEW VAR
+    string public newVar_;
 
     function initialize(uint256 initialSupply,uint256 protocolFee,address protocolfeeReciever,uint256 cap) public virtual initializer {
         __Ownable_init();
@@ -39,5 +42,10 @@ contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgrad
 
     function setProtocolFeeReciever(address protocolFeeReciever) public onlyOwner {
         protocolFeeReciever_ = protocolFeeReciever;
+    }
+
+    // NEW FUNCTION
+    function setNewVar(string memory newVar) public {
+        newVar_ = newVar;
     }
 }
