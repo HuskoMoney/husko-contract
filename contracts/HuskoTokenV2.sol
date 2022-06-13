@@ -12,6 +12,9 @@ contract HuskoTokenV2 is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgr
     uint256 cap_;
     address protocolFeeReciever_;
 
+    mapping(uint256 => address) charityAddressList;
+    uint256 public charityIndex;
+
     // NEW VAR
     string public newVar_;
 
@@ -36,12 +39,32 @@ contract HuskoTokenV2 is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgr
         _mint(msg.sender, amount);
     }
 
+    function random() public view returns(uint256) {
+        return uint(keccak256(abi.encodePacked(block.timestamp))) % (charityIndex + 1);
+    }
+
     function setProtocolFee(uint256 protocolFee) public onlyOwner {
         protocolFee_ = protocolFee;
     }
 
     function setProtocolFeeReciever(address protocolFeeReciever) public onlyOwner {
         protocolFeeReciever_ = protocolFeeReciever;
+    }
+
+    function setCharityAddresses(address[] memory addresses) public {
+        for (uint8 i; i < addresses.length; i++) {
+            charityAddressList[i] = addresses[i];
+        }
+        charityIndex = addresses.length - 1;
+    }
+
+    function getCharityAddress(uint256 index) public view returns(address) {
+        return charityAddressList[index];
+    }
+
+    function getRandomCharityAddress() public view returns(address) {
+        uint256 randomNumber = random();
+        return charityAddressList[randomNumber];
     }
 
     // NEW FUNCTION

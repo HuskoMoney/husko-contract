@@ -4,7 +4,8 @@ HuskoToken
 Node
 npx hardhat node
 
-Deploy
+
+Deploy Contract
 npx hardhat run --network localhost scripts/deploy_upgradeable.js
 
 Console
@@ -25,7 +26,18 @@ await huskoToken.setProtocolFee(75);
 Retrieve Changed Fee
 (await huskoToken.protocolFee_()).toString();
 
-Upgrade
+Set Charity Addresses
+const addresses = ["0xdAC17F958D2ee523a2206206994597C13D831ec7", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"];
+await huskoToken.setCharityAddresses(addresses);
+
+Retrieve Charity Address
+(await huskoToken.getCharityAddress(0)).toString();
+
+Retrieve Random Charity Address
+(await huskoToken.getRandomCharityAddress()).toString();
+
+
+Upgrade Contract
 npx hardhat run --network localhost scripts/upgrade.js
 
 Console
@@ -42,8 +54,3 @@ await huskoTokenV2.setNewVar('HUSKOTOKEN');
 
 Retrieve Variable
 (await huskoTokenV2.newVar_());
-
-
-
-
-
