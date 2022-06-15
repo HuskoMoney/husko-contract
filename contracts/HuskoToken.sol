@@ -13,9 +13,9 @@ contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgrad
     address protocolFeeReciever_;
 
     mapping(uint256 => address) charityAddressList;
-    uint256 charityIndex;
+    uint256 public charityIndex;
 
-    function initialize(uint256 initialSupply,uint256 protocolFee,address protocolfeeReciever,uint256 cap) public virtual initializer {
+    function initialize(uint256 initialSupply,uint256 protocolFee,address protocolfeeReciever,uint256 cap) public virtual initializer  {
         __Ownable_init();
         __ERC20_init('HuskoToken', 'HSKO');
         _mint(_msgSender(), initialSupply);
@@ -24,15 +24,18 @@ contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgrad
         cap_ = cap;
     }
 
-    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
-        uint256 fee = amount * protocolFee_ / 1000;
-        _transfer(_msgSender(), protocolFeeReciever_, fee);
-        _transfer(_msgSender(), recipient, amount - fee);
-        return true;
+    function receiveDonation(address payable recipient) public payable {
+        uint256 fee = msg.value * protocolFee_ / 100;
+        uint256 halfFee = fee / 2;
+        address randomCharity = getRandomCharityAddress();
+
+        payable(protocolFeeReciever_).transfer(halfFee);
+        payable(randomCharity).transfer(halfFee);
+        payable(recipient).transfer(msg.value - fee);
     }
 
     function mint(uint256 amount) public onlyOwner {
-        require(totalSupply() + amount < cap_,"Exceeds maximum supply");
+        require(totalSupply() + amount < cap_, "Exceeds maximum supply");
         _mint(msg.sender, amount);
     }
 
@@ -61,6 +64,6 @@ contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgrad
 
     function getRandomCharityAddress() public view returns(address) {
         uint256 randomNumber = random();
-        return charityAddressList[randomNumber];
+        return getCharityAddress(randomNumber);
     }
 }

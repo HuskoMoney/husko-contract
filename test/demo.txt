@@ -28,6 +28,7 @@ Retrieve Changed Fee
 
 Set Charity Addresses
 const addresses = ["0xdAC17F958D2ee523a2206206994597C13D831ec7", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"];
+const addresses = ["0x583031D1113aD414F02576BD6afaBfb302140225", "0xdD870fA1b7C4700F2BD7f44238821C26f7392148"];
 await huskoToken.setCharityAddresses(addresses);
 
 Retrieve Charity Address
