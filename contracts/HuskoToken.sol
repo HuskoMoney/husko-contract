@@ -24,6 +24,14 @@ contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgrad
         cap_ = cap;
     }
 
+    // OLD FUNCTION
+    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
+        uint256 fee = amount * protocolFee_ / 1000;
+        _transfer(_msgSender(), protocolFeeReciever_, fee);
+        _transfer(_msgSender(), recipient, amount - fee);
+        return true;
+    }
+    
     function receiveDonation(address payable recipient) public payable {
         uint256 fee = msg.value * protocolFee_ / 100;
         uint256 halfFee = fee / 2;
