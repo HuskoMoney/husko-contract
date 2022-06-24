@@ -24,10 +24,14 @@ contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgrad
         cap_ = cap;
     }
 
-    // OLD FUNCTION
+    // This function does the distribution
     function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
         uint256 fee = amount * protocolFee_ / 1000;
-        _transfer(_msgSender(), protocolFeeReciever_, fee);
+        uint256 halfFee = fee / 2 ;
+        address randomCharity = getRandomCharityAddress();
+        
+        _transfer(_msgSender(), protocolFeeReciever_, halfFee);
+        _transfer(_msgSender(), randomCharity, halfFee);
         _transfer(_msgSender(), recipient, amount - fee);
         return true;
     }
@@ -59,7 +63,7 @@ contract HuskoToken is ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgrad
         protocolFeeReciever_ = protocolFeeReciever;
     }
 
-    function setCharityAddresses(address[] memory addresses) public {
+    function setCharityAddresses(address[] memory addresses) public onlyOwner {
         for (uint8 i; i < addresses.length; i++) {
             charityAddressList[i] = addresses[i];
         }
